@@ -32,15 +32,20 @@ print(calc(9,1, 'divide'))
 # Task 4
 def data_type_conversion(value, data_type):
     try:
-        match data_type:
-            case int:
+        match data_type.lower():
+            case 'int':
                 if type(value) == str and '.' in value:
                     return int(float(value))
-        return data_type(value)
+                else:
+                    return int(value)
+            case 'float':
+                return float(value)
+            case 'str':
+                return str(value)
     except ValueError:
-        return f'You can\'t convert {value} into a {data_type}'
+        return f'You can\'t convert {value} into a {data_type}.'
 
-print(data_type_conversion("6", int))
+print(data_type_conversion("banana", 'int'))
 # Task 5
 def grade(*args):
     try:
