@@ -98,9 +98,17 @@ print(repeat('string', 4))
 
 # Task 7
 def student_scores(score_type, **kwargs):
-   print(kwargs)
+   match score_type:
+       case 'mean':
+        avg = 0
+        for key, value in kwargs.items():
+           avg+=value
+        return avg / len(kwargs)
+       case 'best':
+           # I know there's a better way to do this but I'm tired
+            return [key for key, val in kwargs.items() if val == max(kwargs.values())][0]
 
-print(student_scores('best', alice = 90, tim = 80))
+print(student_scores("best", Tom=75, Dick=89, Angela=91, Frank=50))
 # Task 8
 def titleize(words):
     # put all little words in a list
