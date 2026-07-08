@@ -152,31 +152,23 @@ def pig_latin(word):
     # split the input string on spaces
     word_list = word.split()
     translated_words = []
+    translated_letters = []
     for word in word_list:
         if word[0] in vowels:
-            word_list.append(word + 'ay')
-        elif 'qu' in word_list:
-            return 'found qu'
+            translated_words.append(word + 'ay')
         else:
-            return  ' '.join(translated_words)
 
-    # consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z']
-    #
-    #
-    # for i in range(len(vowels)):
-    #     if vowels[i] in word_list[0]:
-    #         word_list.append('ay')
-    #         #break
-    #     elif consonants[i] in word_list[0]:
-    #         word_list.append(word_list[i])
-    #         del word_list[0]
-    #         word_list.append('ay')
-    #         #break
-    #     elif 'qu' in word:
-    #         word_list.append('qu')
-    #         word_list.append('ay')
-    #
-    #         break
-    # return "".join(word_list)
+            for word in word_list:
+                for letter in word:
+                    if letter not in vowels:
 
-print(pig_latin('square'))
+                        translated_letters.append(letter)
+                    elif letter in vowels:
+                        translated_letters.insert(0,letter)
+
+                translated_words.append(''.join(translated_letters) + 'ay')
+    return  ' '.join(translated_words)
+
+
+
+print(pig_latin('banana'))
