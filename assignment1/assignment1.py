@@ -8,6 +8,8 @@ print(hello())
 def greet(name):
     return f'Hello, {name}!'
 print(greet('Jacob'))
+
+
 # Task 3
 def calc(num1, num2, operator='multiply'):
   try:
@@ -23,12 +25,18 @@ def calc(num1, num2, operator='multiply'):
             return test
         case 'modulo':
             return num1 % num2
+        case 'int_divide':
+            return num1 // num2
+        case 'pow':
+            return num1 ** num2
   except ZeroDivisionError as e:
       return f'You can\'t divide by 0!'
   except TypeError as e:
       return f'You can\'t multiply those values!'
 
 print(calc(9,1, 'divide'))
+
+
 # Task 4
 def data_type_conversion(value, data_type):
     try:
@@ -46,6 +54,8 @@ def data_type_conversion(value, data_type):
         return f'You can\'t convert {value} into a {data_type}.'
 
 print(data_type_conversion("banana", 'int'))
+
+
 # Task 5
 def grade(*args):
     try:
@@ -73,6 +83,8 @@ def grade(*args):
         return f'Invalid data was provided.'
 
 print(grade(75,85,95))
+
+
 # Task 6
 def repeat(string, count):
     repeat_string = ''
