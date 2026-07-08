@@ -27,7 +27,7 @@ def calc(num1, num2, operator='multiply'):
             return num1 % num2
         case 'int_divide':
             return num1 // num2
-        case 'pow':
+        case 'power':
             return num1 ** num2
   except ZeroDivisionError as e:
       return f'You can\'t divide by 0!'
@@ -149,23 +149,34 @@ print(hangman(secret = "difficulty", guess = "ic"))
 # Task 10
 def pig_latin(word):
     vowels = ['a','e','i','o','u']
-    consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z']
-    word_list = list(word)
+    # split the input string on spaces
+    word_list = word.split()
+    translated_words = []
+    for word in word_list:
+        if word[0] in vowels:
+            word_list.append(word + 'ay')
+        elif 'qu' in word_list:
+            return 'found qu'
+        else:
+            return  ' '.join(translated_words)
 
-    for i in range(len(vowels)):
-        if vowels[i] in word_list[0]:
-            word_list.append('ay')
-            #break
-        elif consonants[i] in word_list[0]:
-            word_list.append(word_list[i])
-            del word_list[0]
-            word_list.append('ay')
-            #break
-        elif 'qu' in word:
-            word_list.append('qu')
-            word_list.append('ay')
+    # consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z']
+    #
+    #
+    # for i in range(len(vowels)):
+    #     if vowels[i] in word_list[0]:
+    #         word_list.append('ay')
+    #         #break
+    #     elif consonants[i] in word_list[0]:
+    #         word_list.append(word_list[i])
+    #         del word_list[0]
+    #         word_list.append('ay')
+    #         #break
+    #     elif 'qu' in word:
+    #         word_list.append('qu')
+    #         word_list.append('ay')
+    #
+    #         break
+    # return "".join(word_list)
 
-            break
-    return "".join(word_list)
-
-print(pig_latin('herryhay'))
+print(pig_latin('square'))
