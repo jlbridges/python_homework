@@ -5,28 +5,28 @@ import custom_module
 from datetime import datetime
 
 # task 1
-# try:
-#     with open("diary.txt", "a") as f:
-#         prompt = input("What happened today?")
-#         f.write(prompt + "\n")
-#         while True:
-#             what_else = input("What next?")
-#             f.write(what_else + "\n")
-#             if what_else == "done for now":
-#                 f.write(what_else)
-#                 break
-# except Exception as e:
-#     trace_back = traceback.extract_tb(e.__traceback__)
-#     stack_trace = list()
-#     for trace in trace_back:
-#         stack_trace.append(
-#             f"File : {trace[0]} , Line : {trace[1]}, Func.Name : {trace[2]}, Message : {trace[3]}"
-#         )
-#     print(f"Exception type: {type(e).__name__}")
-#     message = str(e)
-#     if message:
-#         print(f"Exception message: {message}")
-#     print(f"Stack trace: {stack_trace}")
+try:
+    with open("diary.txt", "a") as f:
+        prompt = input("What happened today?")
+        f.write(prompt + "\n")
+        while True:
+            what_else = input("What next?")
+            f.write(what_else + "\n")
+            if what_else == "done for now":
+                f.write(what_else)
+                break
+except Exception as e:
+    trace_back = traceback.extract_tb(e.__traceback__)
+    stack_trace = list()
+    for trace in trace_back:
+        stack_trace.append(
+            f"File : {trace[0]} , Line : {trace[1]}, Func.Name : {trace[2]}, Message : {trace[3]}"
+        )
+    print(f"Exception type: {type(e).__name__}")
+    message = str(e)
+    if message:
+        print(f"Exception message: {message}")
+    print(f"Stack trace: {stack_trace}")
 
 
 # task 2
@@ -66,6 +66,10 @@ def read_employees():
             print(f"Exception message: {message}")
         print(f"Stack trace: {stack_trace}")
 
+
+employees = read_employees()
+
+
 # task 3
 def column_index(field):
 
@@ -73,7 +77,12 @@ def column_index(field):
 
 #task 4
 def first_name(row_num):
-    return employees["rows"][row_num][employee_id_column]
+    column = column_index('first_name')
+    return employees['rows'][row_num][column]
+get_first_name = first_name(4)
+
+print(get_first_name)
+
 
 # task 5
 def employee_find(employee_id):
@@ -116,7 +125,7 @@ def all_employees_dict():
     return result
 
 
-employees = read_employees()
+
 
 # task 10
 def get_this_value():
@@ -125,7 +134,9 @@ def get_this_value():
 #task 11
 def set_that_secret(new_secret):
     make_secret = custom_module.set_secret(new_secret)
-
+    return make_secret
+new_secret = set_that_secret('python rocks')
+print(custom_module.secret)
 #task 12
 def get_minutes():
     minute_dicts = {}
@@ -151,7 +162,8 @@ def read_minutes():
     minutes1 = minutes["minutes1.csv"]
     minutes2 = minutes["minutes2.csv"]
     return minutes1, minutes2
-
+#task 12
+minutes1, minutes2 = read_minutes()
 
 
 
@@ -161,6 +173,8 @@ def create_minutes_set():
     minutes2_set = set(minutes2["rows"])
 
     return minutes1_set.union(minutes2_set)
+#task 13
+minutes_set = create_minutes_set()
 
 # task 14
 def create_minutes_list():
@@ -168,6 +182,9 @@ def create_minutes_list():
         map(lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")), minutes_set)
     )
     return minute_list
+#task 14
+minutes_list = create_minutes_list()
+
 
 #task 15
 def write_sorted_list():
@@ -175,11 +192,13 @@ def write_sorted_list():
     sorted_list = sorted(minutes_list, key=lambda x: x[1])
 
     sorted_list_converted = list(map(lambda x:(x[0], str(datetime.strftime(x[1], "%B %d, %Y"))), sorted_list))
+
     try:
         with open('./minutes.csv', 'w') as f:
             writer = csv.writer(f)
-            writer.writerow(minutes1)
-            writer.writerow(sorted_list_converted)
+            writer.writerow(minutes1['fields'])
+            for item in sorted_list_converted:
+                writer.writerow(item)
         return sorted_list_converted
     except Exception as e:
         print(e)
@@ -187,11 +206,8 @@ def write_sorted_list():
 #task 3
 employee_id_column = column_index("employee_id")
 
-#task 12
-minutes1, minutes2 = read_minutes()
-#task 13
-minutes_set = create_minutes_set()
-#task 14
-minutes_list = create_minutes_list()
-print(minutes_list)
-print(write_sorted_list())
+
+
+
+#task 15
+write_sorted_list()
