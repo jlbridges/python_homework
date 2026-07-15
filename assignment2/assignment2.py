@@ -3,6 +3,7 @@ import os
 import csv
 import custom_module
 from datetime import datetime
+import sys
 
 
 # task 2
@@ -32,6 +33,7 @@ def read_employees():
         if message:
             print(f"Exception message: {message}")
         print(f"Stack trace: {stack_trace}")
+        sys.exit(1)
     return employee_dict
 
 
