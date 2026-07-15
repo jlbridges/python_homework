@@ -7,10 +7,10 @@ try:
         f.write(prompt + "\n")
         while True:
             what_else = input("What else? ")
-
+            f.write(what_else + "\n")
             if what_else == "done for now":
                 break
-            f.write(what_else + "\n")
+
 except Exception as e:
     trace_back = traceback.extract_tb(e.__traceback__)
     stack_trace = list()
