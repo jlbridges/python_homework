@@ -7,28 +7,19 @@ from datetime import datetime
 
 # task 2
 def read_employees():
-    empty_dict = {}
-    empty_list = []
+    employee_dict = {}
+    employee_list = []
 
     try:
         with open("../csv/employees.csv", "r") as f:
             read_csv = csv.reader(f, delimiter=",")
-            # print(type(read_csv))
-            # print(dir(read_csv))
-            empty_dict["fields"] = next(read_csv)
+
+            employee_dict["fields"] = next(read_csv)
             for line in read_csv:
-                empty_list.append(line)
-            # print(empty_dict)
-            # print(empty_list)
-        empty_dict["rows"] = empty_list
+                employee_list.append(line)
 
-        # id_index = empty_dict['fields'].index('employee_id')
-        # print(empty_dict['rows'][0][name_index])
-        # print(empty_dict['rows'][0][id_index])
-        return empty_dict
+        employee_dict["rows"] = employee_list
 
-    except FileNotFoundError:
-        print("file not found")
     except Exception as e:
         trace_back = traceback.extract_tb(e.__traceback__)
         stack_trace = list()
@@ -41,6 +32,7 @@ def read_employees():
         if message:
             print(f"Exception message: {message}")
         print(f"Stack trace: {stack_trace}")
+    return employee_dict
 
 
 employees = read_employees()
@@ -51,13 +43,14 @@ def column_index(field):
 
     return employees["fields"].index(field)
 
-#task 4
-def first_name(row_num):
-    column = column_index('first_name')
-    return employees['rows'][row_num][column]
-get_first_name = first_name(4)
 
-print(get_first_name)
+employee_id_column = column_index("employee_id")
+
+
+# task 4
+def first_name(row_num):
+    column = column_index("first_name")
+    return employees["rows"][row_num][column]
 
 
 # task 5
@@ -69,7 +62,8 @@ def employee_find(employee_id):
     matches = list(filter(employee_match, employees["rows"]))
     return matches
 
-#task 6
+
+# task 6
 def employee_find_2(employee_id):
     matches = list(
         filter(
@@ -77,6 +71,7 @@ def employee_find_2(employee_id):
         )
     )
     return matches
+
 
 # task 7
 def sort_by_last_name():
@@ -86,11 +81,22 @@ def sort_by_last_name():
 
     return employees["rows"]
 
-#task 8
+
+# print(sort_by_last_name())
+
+
+# task 8
 def employee_dict(row):
-    result = dict(zip(employees["fields"], row))
-    del result["employee_id"]
-    return result
+    employee_row_dict = {}
+    data = dict(zip(employees["fields"], row))
+    # print(data)
+    for k, v in data.items():
+        if k == "employee_id":
+            continue
+        else:
+            employee_row_dict[k] = v
+    return employee_row_dict
+
 
 # task 9
 def all_employees_dict():
@@ -101,19 +107,25 @@ def all_employees_dict():
     return result
 
 
+all_employees_dict()
 
 
 # task 10
 def get_this_value():
     return os.getenv("THISVALUE")
 
-#task 11
+
+# task 11
 def set_that_secret(new_secret):
     make_secret = custom_module.set_secret(new_secret)
     return make_secret
-new_secret = set_that_secret('python rocks')
+
+
+new_secret = set_that_secret("python rocks")
 print(custom_module.secret)
-#task 12
+
+
+# task 12
 def get_minutes():
     minute_dicts = {}
 
@@ -132,25 +144,30 @@ def get_minutes():
 
     return minute_dicts
 
-#task 12
+
+# task 12
 def read_minutes():
     minutes = get_minutes()
     minutes1 = minutes["minutes1.csv"]
     minutes2 = minutes["minutes2.csv"]
     return minutes1, minutes2
-#task 12
+
+
+# task 12
 minutes1, minutes2 = read_minutes()
 
 
-
-#task 13
+# task 13
 def create_minutes_set():
     minutes1_set = set(minutes1["rows"])
     minutes2_set = set(minutes2["rows"])
 
     return minutes1_set.union(minutes2_set)
-#task 13
+
+
+# task 13
 minutes_set = create_minutes_set()
+
 
 # task 14
 def create_minutes_list():
@@ -158,32 +175,31 @@ def create_minutes_list():
         map(lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")), minutes_set)
     )
     return minute_list
-#task 14
+
+
+# task 14
 minutes_list = create_minutes_list()
 
 
-#task 15
+# task 15
 def write_sorted_list():
     # Sort minutes_list in ascending order of datetime.
     sorted_list = sorted(minutes_list, key=lambda x: x[1])
 
-    sorted_list_converted = list(map(lambda x:(x[0], str(datetime.strftime(x[1], "%B %d, %Y"))), sorted_list))
+    sorted_list_converted = list(
+        map(lambda x: (x[0], str(datetime.strftime(x[1], "%B %d, %Y"))), sorted_list)
+    )
 
     try:
-        with open('./minutes.csv', 'w') as f:
+        with open("./minutes.csv", "w") as f:
             writer = csv.writer(f)
-            writer.writerow(minutes1['fields'])
+            writer.writerow(minutes1["fields"])
             for item in sorted_list_converted:
                 writer.writerow(item)
         return sorted_list_converted
     except Exception as e:
         print(e)
 
-#task 3
-employee_id_column = column_index("employee_id")
 
-
-
-
-#task 15
+# task 15
 write_sorted_list()
