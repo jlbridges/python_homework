@@ -1,19 +1,18 @@
 import logging
 
 
-
-
 logger = logging.getLogger(__name__ + "_parameter_log")
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.FileHandler("./decorator.log","a"))
 def logger_decorator(func):
     def wrapper(*args, **kwargs):
         logger.log(logging.INFO, f"Calling {func.__name__}")
-        func()
+
         logger.log(logging.INFO,f"  args: {args}")
         logger.log(logging.INFO,f"  kwargs: {kwargs}")
         result = func(*args, **kwargs)
         logger.log(logging.INFO,f"  returned: {result}")
+        return result
     return wrapper
 @logger_decorator
 def hello():
