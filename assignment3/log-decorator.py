@@ -11,9 +11,9 @@ def logger_decorator(func):
         logger.log(logging.INFO, f"Calling {func.__name__}")
         func()
         logger.log(logging.INFO,f"  args: {args}")
-        print(f"  kwargs: {kwargs}")
+        logger.log(logging.INFO,f"  kwargs: {kwargs}")
         result = func(*args, **kwargs)
-        print(f"  returned: {result}")
+        logger.log(logging.INFO,f"  returned: {result}")
     return wrapper
 @logger_decorator
 def hello():
