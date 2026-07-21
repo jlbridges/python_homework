@@ -53,7 +53,7 @@ class Board:
                 continue
             break
         if (cat):
-            return (True, "Cat's Game.")
+            return (True, "Cat's Game")
         win = False
         for i in range(3):  # check rows
             if self.board_array[i][0] != " ":
@@ -83,9 +83,9 @@ class Board:
                 return (False, "O's turn.")
         else:
             if self.turn == "O":
-                return (True, "X wins!")
+                return (True, "X has won")
             else:
-                return (True, "O wins!")
+                return (True, "O has won")
 board = Board()
 game_over = False
 

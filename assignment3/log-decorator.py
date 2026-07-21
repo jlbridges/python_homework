@@ -1,5 +1,6 @@
 import logging
-import csv
+
+# one time setup
 logger = logging.getLogger(__name__ + "_parameter_log")
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.FileHandler("./decorator.log", "a"))
@@ -9,8 +10,8 @@ def logger_decorator(func):
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
 
-        positional = list(args) if args else 'none'
-        keyword = dict(kwargs) if kwargs else 'none'
+        positional = list(args) if args else "none"
+        keyword = dict(kwargs) if kwargs else "none"
 
         logger.log(logging.INFO, f"function: {func.__name__}")
         logger.log(logging.INFO, f"positional parameters: {positional}")
@@ -20,23 +21,25 @@ def logger_decorator(func):
     return wrapper
 
 
+# takes no parameters, returns nothing
 @logger_decorator
 def hello():
     print("Hello, World!")
 
 
+# takes a variable number of positional arguments, returns True
 @logger_decorator
 def new_func(*args):
     return True
 
 
+# takes no positional arguments, a variable number of keyword arguments, returns logger_decorator
 @logger_decorator
 def new_new_func(**kwargs):
     return logger_decorator
 
 
+# mainline: call each function, passing parameters where applicable
 hello()
 new_func('test')
 new_new_func(test='test2')
-
-

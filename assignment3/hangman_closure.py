@@ -21,19 +21,7 @@ while not solved:
     solved = guess_letter(letter)
 
 
-# def hangman(secret, guess):
-#     new_list = []
-#     new_str = list(secret)
-#     split_guess = list(guess)
-#     for i in range(len(new_str)):
-#         if new_str[i] not in split_guess:
-#             new_list.append(new_str[i].replace(new_str[i], '_'))
-#         else:
-#             new_list.append(new_str[i])
-#     return "".join(new_list)
-#
-#
-# print(hangman(secret="difficulty", guess="ic"))
+
 
 
 
