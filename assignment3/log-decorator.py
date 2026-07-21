@@ -1,5 +1,7 @@
 import logging
 
+# Task 1: Writing and Testing a Decorator
+
 # one time setup
 logger = logging.getLogger(__name__ + "_parameter_log")
 logger.setLevel(logging.INFO)
@@ -13,10 +15,15 @@ def logger_decorator(func):
         positional = list(args) if args else "none"
         keyword = dict(kwargs) if kwargs else "none"
 
-        logger.log(logging.INFO, f"function: {func.__name__}")
-        logger.log(logging.INFO, f"positional parameters: {positional}")
-        logger.log(logging.INFO, f"keyword parameters: {keyword}")
-        logger.log(logging.INFO, f"return: {result}")
+        # One grouped record per invocation, so each call's four pieces of
+        # information stay together as a single log entry.
+        logger.log(
+            logging.INFO,
+            f"function: {func.__name__}\n"
+            f"positional parameters: {positional}\n"
+            f"keyword parameters: {keyword}\n"
+            f"return: {result}\n"
+        )
         return result
     return wrapper
 
@@ -42,4 +49,4 @@ def new_new_func(**kwargs):
 # mainline: call each function, passing parameters where applicable
 hello()
 new_func('test')
-new_new_func(test='test2')
+new_new_func(test='test2', another='value2')
