@@ -1,15 +1,21 @@
 class TictactoeException(Exception):
     def __init__(self, msg):
+        self.message = msg
         super().__init__(msg)
 class Board:
+    valid_moves = ["upper left", "upper center",
+                   "upper right", "middle left",
+                   "center", "middle right",
+                   "lower left", "lower center",
+                   "lower right"]
     def __init__(self):
-        self.board_array = [["" for j in range(3)] for i in range(3)]
-        self.turn
-        self.valid_moves=["upper left", "upper center",
-                          "upper right", "middle left",
-                          "center", "middle right",
-                          "lower left", "lower center",
-                          "lower right"]
+
+        self.board_array =[[" ", " ", " "],
+                             [" ", " ", " "],
+                             [" ", " ", " "]]
+        self.turn = "X"
+        self.last_move = None
+
 
     def __str__(self):
         lines = []
@@ -80,4 +86,23 @@ class Board:
                 return (True, "X wins!")
             else:
                 return (True, "O wins!")
-print(Board().board_array)
+board = Board()
+game_over = False
+
+print("Welcome to Tic-Tac-Toe!")
+print("Valid moves are:", ", ".join(Board.valid_moves))
+print()
+
+while not game_over:
+    print(board)
+    _, status = board.whats_next()
+    move_string = input(f"{status}. Enter your move: ").strip().lower()
+    try:
+        board.move(move_string)
+    except TictactoeException as e:
+        print(e.message)
+        continue
+    game_over, status = board.whats_next()
+    if game_over:
+        print(board)
+        print(status)
