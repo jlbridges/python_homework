@@ -53,7 +53,7 @@ print(results_df)
 
 results_df.to_csv('get_books.csv')
 
-with open('assignment8/get_books.json', 'w') as f:
+with open('get_books.json', 'w') as f:
     json.dump(results, f, indent=4)
 
 driver.quit()
