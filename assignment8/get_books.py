@@ -1,14 +1,17 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import csv
 import pandas as pd
 import json
-options = webdriver.FirefoxOptions()
-options.add_argument('--headless')  # Enable headless mode
-options.add_argument('--disable-gpu')
 
-driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()),options=options)
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+options.add_argument('--window-size=1920x1080')
+
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
 
 driver.get("https://durhamcounty.bibliocommons.com/v2/search?query=learning%20spanish&searchType=smart")
 
@@ -40,7 +43,7 @@ for item in results_list:
     book_dict = {
         "Title": title.text,
         "Author": author_text,
-        "Format Year": format_year.text
+        "Format-Year": format_year.text
     }
 
     results.append(book_dict)
