@@ -1,0 +1,10 @@
+Which sections of the website are restricted for crawling?
+internal admin pages, deleting pages and accounts.
+
+Are there specific rules for certain user agents?
+
+They have to use specific site copying tools like wget or webbzip. must use a crawl-delay.
+
+
+Robots.txt is used to communicate to developers what they can ethically scrape and what that can't.
+It promotes ethical scraping by communicating what is allowed and what is not.
