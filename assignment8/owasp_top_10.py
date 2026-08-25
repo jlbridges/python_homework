@@ -14,19 +14,17 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 driver.get("https://owasp.org/Top10/2025/")
 
-see_also_h3 = driver.find_element(By.CSS_SELECTOR,'[id=top-102025-list]')
+top_ten_list = driver.find_element(By.CSS_SELECTOR,'[id=top-102025-list]')
+ol = top_ten_list.find_element(By.XPATH, 'following-sibling::ol')
+list_items = ol.find_elements(By.TAG_NAME, 'li')
 links = []
-if see_also_h3:
-    parent_div = see_also_h3.find_element(By.XPATH, '..')
-    if parent_div:
-        see_also_div = parent_div.find_element(By.XPATH,'ol' )
-        link_elements = see_also_div.find_elements(By.CSS_SELECTOR, 'a')
-        for link in link_elements:
-            # print(f"{link.text}: {link.get_attribute('href')}")
-            name = link.text.strip()
-            url = link.get_attribute("href")
-            if name and url:
-                links.append({"Title": name, "Href": url})
+
+for li in list_items:
+    link = li.find_element(By.CSS_SELECTOR, 'a')
+    name = link.text.strip()
+    url = link.get_attribute("href")
+    if name and url:
+        links.append({"Title": name, "Href": url})
 print(links)
 
 
