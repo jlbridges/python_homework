@@ -1,0 +1,6 @@
+Which sections of the website are restricted for crawling?
+/w/ and /api/ (backend paths), /wiki/Special: pages, and many /wiki/Wikipedia: pages related to deletion discussions, arbitration, admin noticeboards, and sockpuppet investigations.
+
+Are there specific rules for certain user agents?
+Yes. Many bots (MJ12bot, wget, HTTrack, WebZIP, Xenu, etc.) are fully blocked, mostly site-copying tools or bots that ignore rate limits. SemrushBot isn't blocked but must use a 5 second crawl-delay. The generic User-agent: * rule allows a few API/mobile paths but blocks most others.
+Websites use robots.txt to control how bots access their content and protect server resources from being overwhelmed by aggressive crawlers. It also keeps certain pages, like deletion debates or user disputes, out of search engine results. This promotes ethical scraping by giving bots clear rules on what they're allowed to access.

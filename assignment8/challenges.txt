@@ -1,0 +1,4 @@
+I'm not sure if this is meant to be specific to task 6, but I didn't have any problems with this task.
+We were given an example code block that handled the logic, so it was just a matter of finding the starting point.
+The overall challenge was just looking thought the DOM to find specific elements.
+Would like to explore more programmatic ways to view the tree in the future.
