@@ -15,8 +15,25 @@ ORDER BY orders.order_id
 LIMIT 5;
 """
 cursor.execute(query)
-results = cursor.fetchall()
-for row in results:
+for row in cursor.fetchall():
+    print(row)
+
+# Task 2: average order total per customer (using a subquery)
+query2 = """
+SELECT customers.customer_name, AVG(sub.total_price) AS average_total_price
+FROM (
+    SELECT orders.customer_id AS customer_id_b,
+           SUM(products.price * line_items.quantity) AS total_price
+    FROM orders
+    JOIN line_items ON orders.order_id = line_items.order_id
+    JOIN products ON line_items.product_id = products.product_id
+    GROUP BY orders.order_id
+) AS sub
+LEFT JOIN customers ON customers.customer_id = sub.customer_id_b
+GROUP BY customers.customer_id;
+"""
+cursor.execute(query2)
+for row in cursor.fetchall():
     print(row)
 
 # Task 3: Insert transaction for a new order
@@ -65,18 +82,22 @@ cursor.execute(query3, (order_id,))
 for row in cursor.fetchall():
     print(row)
 
-
-
+# Task 3 cleanup: delete the line_items and order this script just created,
+# so the database is left in its original state after each run
+cursor.execute("DELETE FROM line_items WHERE order_id = ?;", (order_id,))
+cursor.execute("DELETE FROM orders WHERE order_id = ?;", (order_id,))
+conn.commit()
 
 # Task 4: employees with more than 5 orders
 query4 = """
 SELECT employees.employee_id, employees.first_name, employees.last_name, COUNT(orders.order_id) AS order_count
 FROM employees
 JOIN orders ON employees.employee_id = orders.employee_id
-GROUP BY employees.employee_id
+GROUP BY employees.employee_id, employees.first_name, employees.last_name
 HAVING COUNT(orders.order_id) > 5;
 """
 cursor.execute(query4)
 for row in cursor.fetchall():
     print(row)
+
 conn.close()
